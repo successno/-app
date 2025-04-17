@@ -11,14 +11,21 @@ struct HomeView: View {
     
     @EnvironmentObject private var vm :HomeViewModel
     
-    @State private var showPortfolio:Bool = false
+    @State private var showPortfolio:Bool = false // 动画右侧
+    
+    @State private var showPortfolioView:Bool = false // 新的工作表  new sheet
     
     var body: some View {
          ZStack{
             //背景层
             Color.theme.background
                 .ignoresSafeArea()
-            
+                .sheet(isPresented: $showPortfolioView) {
+                    PortfolioView()
+                    //新表相当于新环境，需要重新从环境中获取
+                        .environmentObject(vm)
+                }
+             
             //内容层
             VStack{
                homeHeader
@@ -62,6 +69,12 @@ extension HomeView{
         HStack{
             CircleButtonView(iconName: showPortfolio ? "plus" : "info")
                 .animation(.none, value: showPortfolio)
+                .onTapGesture {
+                    if showPortfolio {
+                        showPortfolioView.toggle()
+                        
+                    }
+                }
                 .background(
                     CircleButtonAnimationView(animate: $showPortfolio)
                 )
