@@ -35,6 +35,11 @@ struct PortfolioView: View {
                     trailingNaviBarButtons
                 }
             })
+            .onChange(of: vm.searchText) { oldValue, newValue in
+                if newValue == "" {
+                    removeSelectedCoin()
+                }
+            }
            // .navigationBarItems( leading:XmarkButton() )  ios14弃用改为toolbar(content:)
         }
     }
@@ -134,7 +139,7 @@ extension PortfolioView{
             showCheckmark = true
             removeSelectedCoin()
         }
-        
+        //键盘取消
         // hide keyboard
         UIApplication.shared.endEditing()
         
