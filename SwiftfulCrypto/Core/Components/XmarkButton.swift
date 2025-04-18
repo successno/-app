@@ -10,7 +10,6 @@ import SwiftUI
 struct XMarkButton: View {
     
     @Environment(\.presentationMode) var presentationMode
-
     
     var body: some View {
         Button(action: {
@@ -21,7 +20,6 @@ struct XMarkButton: View {
         })
     }
 }
-
 #Preview {
     XMarkButton()
 }

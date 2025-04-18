@@ -29,7 +29,7 @@ struct PortfolioView: View {
             .navigationTitle("编辑投资组合")
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    XMarkButton()
+                   XMarkButton()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     trailingNaviBarButtons

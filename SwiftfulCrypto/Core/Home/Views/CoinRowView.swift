@@ -22,7 +22,10 @@ struct CoinRowView: View {
             rightColumn
         }
         .font(.subheadline)
-    }
+        .background(
+            Color.theme.background.opacity(0.001)
+        )
+    }//添加中间可以点击
 }
 
 #Preview {
