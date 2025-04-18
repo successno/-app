@@ -112,9 +112,9 @@ struct CoinModel:Identifiable, Codable ,Hashable{
     let atlDate: String?
     let lastUpdated: String?
     let currentHoldings:Double?
-    //let sparklineIn7D:SparklineIn7D?
+    let sparklineIn7D: SparklineIn7D?
     
-    enum CodingKeys: String,CodingKey {
+    enum CodingKeys: String,CodingKey{
         case id, symbol,name, image
         case currentPrice = "current_price"
         case marketCap = "market_cap"
@@ -138,12 +138,12 @@ struct CoinModel:Identifiable, Codable ,Hashable{
         case atlDate = "atl_date"
         case lastUpdated = "last_updated"
         case currentHoldings
-        //case sparklineIn7D
+        case sparklineIn7D = "sparkline_in_7d"
     }
     
     //更新
     func updateHoldings(amount:Double) -> CoinModel {
-        return CoinModel(id: id, symbol: symbol, name: name, image: image, currentPrice: currentPrice, marketCap: marketCap, marketCapRank: marketCapRank, fullyDilutedValuation: fullyDilutedValuation, totalVolume: totalVolume, high24H: high24H, low24H: low24H, priceChange24H: priceChange24H, priceChangePercentage24H: priceChangePercentage24H, marketCapChange24H: marketCapChange24H, marketCapChangePercentage24H: marketCapChangePercentage24H, circulatingSupply: circulatingSupply, totalSupply: totalSupply, maxSupply: maxSupply, ath: ath, athChangePercentage: athChangePercentage, athDate: athDate, atl: atl, atlChangePercentage: atlChangePercentage, atlDate: atlDate, lastUpdated: lastUpdated, currentHoldings: amount)
+        return CoinModel(id: id, symbol: symbol, name: name, image: image, currentPrice: currentPrice, marketCap: marketCap, marketCapRank: marketCapRank, fullyDilutedValuation: fullyDilutedValuation, totalVolume: totalVolume, high24H: high24H, low24H: low24H, priceChange24H: priceChange24H, priceChangePercentage24H: priceChangePercentage24H, marketCapChange24H: marketCapChange24H, marketCapChangePercentage24H: marketCapChangePercentage24H, circulatingSupply: circulatingSupply, totalSupply: totalSupply, maxSupply: maxSupply, ath: ath, athChangePercentage: athChangePercentage, athDate: athDate, atl: atl, atlChangePercentage: atlChangePercentage, atlDate: atlDate, lastUpdated: lastUpdated, currentHoldings: amount,sparklineIn7D: sparklineIn7D)
     }
     //持股值变动
     var currentHoldingsValue:Double{
@@ -155,13 +155,6 @@ struct CoinModel:Identifiable, Codable ,Hashable{
     }
     
 }
-
-//struct SparklineIn7D:Codable{
-//    let price:[Double]?
-//}
-
-
-
-//class CoinModel {
-//    
-//}
+struct SparklineIn7D: Codable, Hashable {
+    let price: [Double]?
+}
