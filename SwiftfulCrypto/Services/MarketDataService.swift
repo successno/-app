@@ -25,7 +25,7 @@ class MarketDataService {
         return url
     }
     
-    private func getData() {
+     func getData() {
         guard let url = buildURL() else {
             let error = NetworkingManager.CoinDataServiceError.self
             print(error.unknow)

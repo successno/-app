@@ -13,6 +13,7 @@ class HomeViewModel:ObservableObject {
     @Published var allCoins:[CoinModel] = []
     @Published var portfolioCoins: [CoinModel] = []
     @Published var searchText:String = ""
+    @Published var isloading:Bool = false
     
     private let coinDataService = CoinDataService()
     
@@ -102,6 +103,7 @@ class HomeViewModel:ObservableObject {
 //            }
             .sink { [weak self](returnedStats) in
                 self?.statistics = returnedStats
+                self?.isloading = false
             }
             .store(in: &cancellables)
         
@@ -110,6 +112,13 @@ class HomeViewModel:ObservableObject {
     
     func updatePortfolio(coin:CoinModel,amount:Double) {
         portfolioDataService.updatePortfolio(coin: coin, amount: amount)
+    }
+    
+    func reloadData(){
+        isloading = true
+        coinDataService.getCoin()
+        marketDataService.getData()
+        HapticManager.notification(type: .success)
     }
     
     
@@ -164,12 +173,12 @@ class HomeViewModel:ObservableObject {
             }
             .reduce(0, +)
         
-        let percentageChange = ((portfolioValue - previousValue) / previousValue) * 100
+        let percentageChange = ((portfolioValue - previousValue) / previousValue)
         
         let portfolio = StatisticModel(
             title: "Portfolio Value",
             value:portfolioValue.asCurrencyWith2Decimals(),
-            percentageChange: 0 )
+            percentageChange: percentageChange )
         
         stats.append(contentsOf: [
             marketCap,
