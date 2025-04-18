@@ -16,50 +16,59 @@ struct HomeView: View {
     @State private var showPortfolioView:Bool = false // 新的工作表  new sheet
     
     @State private var selectedCoin: CoinModel? = nil
-    @State private var showDetailView: Bool = false
+  //  @State private var showDetailView: Bool = false
+    @State private var path = NavigationPath()
     
     var body: some View {
-         ZStack{
-            //背景层
-            Color.theme.background
-                .ignoresSafeArea()
-                .sheet(isPresented: $showPortfolioView) {
-                    PortfolioView()
-                    //新表相当于新环境，需要重新从环境中获取
-                    .environmentObject(vm)
+        
+        NavigationStack(path: $path) {
+            ZStack{
+                //背景层
+                Color.theme.background
+                    .ignoresSafeArea()
+                    .sheet(isPresented: $showPortfolioView) {
+                        PortfolioView()
+                        //新表相当于新环境，需要重新从环境中获取
+                            .environmentObject(vm)
+                        
+                    }
+                
+                //内容层
+                VStack{
+                    homeHeader
                     
+                    HomeStatsView(showPortfolio: $showPortfolio)
+                    
+                    SearchBarView(searchText: $vm.searchText)
+                    
+                    columTitle
+                    
+                    if !showPortfolio{
+                        allCoinsList
+                            .transition(.move(edge: .leading))
+                    }
+                    if showPortfolio{
+                        portfolioCoinsList
+                            .transition(.move(edge: .trailing))
+                    }
+                    
+                    
+                    Spacer(minLength: 0)
                 }
-             
-            //内容层
-            VStack{
-               homeHeader
-                
-                HomeStatsView(showPortfolio: $showPortfolio)
-                
-                SearchBarView(searchText: $vm.searchText)
-                
-                columTitle
-                
-                if !showPortfolio{
-                    allCoinsList
-                    .transition(.move(edge: .leading))
-                }
-                if showPortfolio{
-                    portfolioCoinsList
-                        .transition(.move(edge: .trailing))
-                }
-                
-                
-                Spacer(minLength: 0)
             }
+            .navigationDestination(for: CoinModel.self) { coin in
+                DetailLoadingView(coin: .constant(coin))
+            }
+//            .background(
+//                NavigationLink(
+//                    destination: DetailLoadingView(coin:$selectedCoin),
+//                    isActive: $showDetailView,
+//                    label: { EmptyView() })
+//            )
         }
-         .background(
-            NavigationLink(
-                destination: DetailLoadingView(coin:$selectedCoin),
-                isActive: $showDetailView,
-                label: { EmptyView() })
-         )
+        
     }
+    
 }
 
 #Preview {
@@ -114,8 +123,14 @@ extension HomeView{
                 coin in
                 CoinRowView(coin: coin, showHoldingsColumn: false)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
+//                    .onTapGesture {
+//                        segue(coin: coin)
+//                    }
                     .onTapGesture {
-                        segue(coin: coin)
+                        selectedCoin = coin
+                        if let coin = selectedCoin {
+                            path.append(coin)
+                        }
                     }
             }
         }
@@ -128,8 +143,14 @@ extension HomeView{
                 coin in
                 CoinRowView(coin: coin, showHoldingsColumn: true)
                     .listRowInsets(.init(top: 10, leading: 0, bottom: 10, trailing: 0))
+//                    .onTapGesture {
+//                        segue(coin: coin)
+//                    }
                     .onTapGesture {
-                        segue(coin: coin)
+                        selectedCoin = coin
+                        if let coin = selectedCoin {
+                            path.append(coin)
+                        }
                     }
             }
             
@@ -137,10 +158,10 @@ extension HomeView{
         .listStyle(PlainListStyle())
     }
     
-    private func segue(coin:CoinModel){
-        selectedCoin = coin
-        showDetailView.toggle()
-    }
+//    private func segue(coin:CoinModel){
+//        selectedCoin = coin
+//        showDetailView.toggle()
+//    }
     
     private var columTitle: some View{
         HStack{
