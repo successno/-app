@@ -29,7 +29,7 @@ struct PortfolioView: View {
             .navigationTitle("编辑投资组合")
             .toolbar(content: {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    XmarkButton()
+                    XMarkButton()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     trailingNaviBarButtons
@@ -54,7 +54,7 @@ extension PortfolioView{
     private var coinLogeList:some View{
         ScrollView(.horizontal,showsIndicators: false) {
             LazyHStack(spacing: 10) {
-                ForEach(vm.allCoins){ coin in
+                ForEach(vm.searchText.isEmpty ? vm.portfolioCoins : vm.allCoins){ coin in
                     CoinLogoView(coin: coin)
                         .frame(width: 75)
                         .padding(4)
@@ -72,6 +72,17 @@ extension PortfolioView{
             .frame(height: 120)
             .padding(.leading)
         }
+    }
+    
+    private func updateSelectedCoin(coin:CoinModel){
+        selectedCoin = coin
+        
+      if let porfolioCoin = vm.portfolioCoins.first(where: { $0.id == coin.id }),
+         let amount = porfolioCoin.currentHoldings {
+          quantityText = "\(amount)"
+      }else{
+          quantityText = ""
+      }
     }
     
     
@@ -115,30 +126,36 @@ extension PortfolioView{
                 .opacity(showCheckmark ? 1.0 : 0.0 )
             
             Button(action: {
-                
+                saveButtonPressed()
             }, label: {
                 Text("Save".uppercased())
             })
+            
             .opacity(
                 (selectedCoin != nil && selectedCoin?.currentHoldings != Double(quantityText)) ? 1.0 : 0.0 )
         }
         .font(.headline)
     }
     
+    
+    
     private func saveButtonPressed() {
-        
         guard
-            let coin = selectedCoin
+            let coin = selectedCoin,
+            let amount = Double(quantityText)
         else { return }
         
         // save to portfolio
-        //vm.updatePortfolio(coin: coin, amount: amount)
+        vm.updatePortfolio(coin: coin, amount: amount)
         
         // show checkmark
         withAnimation(.easeIn) {
+            print("Before showing checkmark, showCheckmark value: \(showCheckmark)")
             showCheckmark = true
+            print("After showing checkmark, showCheckmark value: \(showCheckmark)")
             removeSelectedCoin()
         }
+        
         //键盘取消
         // hide keyboard
         UIApplication.shared.endEditing()
@@ -146,7 +163,10 @@ extension PortfolioView{
         // hide checkmark
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             withAnimation(.easeOut) {
+                print("Before hiding checkmark, showCheckmark value: \(showCheckmark)")
                 showCheckmark = false
+                print("After hiding checkmark, showCheckmark value: \(showCheckmark)")
+                print("关闭窗口")
             }
         }
         
@@ -156,5 +176,8 @@ extension PortfolioView{
         selectedCoin = nil
         vm.searchText = ""
     }
+ 
+    
     
 }
+

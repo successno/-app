@@ -31,14 +31,14 @@ class CoinImageService {
         guard let imageName  = imageName else{return}
         if let saveImage = fileManager.getImage(imageName: imageName, folderName: folderName){
             image = saveImage
-            print("从文件管理器中检索图像")
+            //print("从文件管理器中检索图像")
         } else {
             downloadCoinImage()
         }
     }
     
     private func downloadCoinImage() {
-        print("正在下载...")
+       // print("正在下载...")
         guard let url = buildURL() else {
             print(NetworkingManager.CoinDataServiceError.unknow)
             return

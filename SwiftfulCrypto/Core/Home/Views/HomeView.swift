@@ -24,6 +24,7 @@ struct HomeView: View {
                     PortfolioView()
                     //新表相当于新环境，需要重新从环境中获取
                         .environmentObject(vm)
+                    
                 }
              
             //内容层
