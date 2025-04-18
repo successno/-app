@@ -92,7 +92,7 @@ class CoinDataService {
             return components.url
         }
 
-  func getCoin() {
+        func getCoin() {
             guard let url = buildURL() else {
                 let error = NetworkingManager.CoinDataServiceError.self
                 print(error.unknow)
