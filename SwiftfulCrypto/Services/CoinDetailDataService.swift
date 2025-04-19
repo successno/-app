@@ -11,7 +11,7 @@ class CoinDetailDataService {
     
     @Published var coinDetails: CoinDetailModel? = nil
     
-    var coinDetailcancellable = Set<AnyCancellable>()
+    var coinDetailcancellable : AnyCancellable?
     let coin: CoinModel
     
     init(coin: CoinModel){
@@ -20,7 +20,7 @@ class CoinDetailDataService {
     }
     
     private func buildURL() -> URL?{
-        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins\(coin.id)")else {return nil}
+        guard let url = URL(string: "https://api.coingecko.com/api/v3/coins/\(coin.id)")else {return nil}
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
         let queryItems: [URLQueryItem] = [
             URLQueryItem(name: "localization", value: "false"),
@@ -30,19 +30,20 @@ class CoinDetailDataService {
             URLQueryItem(name: "developer_data", value: "false"),
             URLQueryItem(name: "sparkline", value: "false"),
         ]
-        
-        var tempComponents = components
-        
-        var combinedQueryItems = [URLQueryItem]()
-        if let existingQueryItems = tempComponents.queryItems {
-            combinedQueryItems = existingQueryItems + queryItems
-        } else {
-            combinedQueryItems = queryItems
-        }
 
-        tempComponents.queryItems = combinedQueryItems
-
-        components = tempComponents
+//        var tempComponents = components
+//        
+//        var combinedQueryItems = [URLQueryItem]()
+//        if let existingQueryItems = tempComponents.queryItems {
+//            combinedQueryItems = existingQueryItems + queryItems
+//        } else {
+//            combinedQueryItems = queryItems
+//        }
+//
+//        tempComponents.queryItems = combinedQueryItems
+//
+//        components = tempComponents
+        components.queryItems = (components.queryItems ?? []) + queryItems
         return components.url
     }
     
@@ -57,8 +58,13 @@ class CoinDetailDataService {
         request.httpMethod = "GET"
         request.timeoutInterval = 10
         setupRequestHeaders(for: &request)
+        
+        //JSONDecoder 是用于将 JSON 数据解码为 Swift 结构体或类实例的工具。当你设置 decoder.keyDecodingStrategy =.convertFromSnakeCase 时，
+        //它的作用是指定解码时的键解码策略，使得 JSONDecoder 能够将 JSON 数据中以下划线命名法（snake case）命名的键，自动转换为 Swift 结构体或类中以驼峰命名法（camel case）命名的属性。
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
 
-        NetworkingManager.download(url: url)
+        coinDetailcancellable = NetworkingManager.download(url: url)
             .decode(type: CoinDetailModel.self, decoder: JSONDecoder())
         
             .mapError { error in
@@ -68,11 +74,22 @@ class CoinDetailDataService {
                 return NetworkingManager.CoinDataServiceError.networkError(error)
             }
         
-            .sink(receiveCompletion: NetworkingManager.handleCompletion,
+        
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                        case.finished:
+                            print("数据获取成功")
+                        case.failure(let error):
+                            print("数据获取失败: \(error)")
+                    }
+                },
+//                receiveCompletion: NetworkingManager.handleCompletion,
                   receiveValue: { [weak self] (returnCoinDetails) in
                 self?.coinDetails = returnCoinDetails
+                self?.coinDetailcancellable?.cancel()
             })
-            .store(in: &coinDetailcancellable)
+           
     }
     
     private func setupRequestHeaders(for request: inout URLRequest) {
@@ -82,5 +99,10 @@ class CoinDetailDataService {
         ]
     }
     
-    
+    deinit {
+        coinDetailcancellable?.cancel()
+    }
+
 }
+
+
