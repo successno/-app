@@ -11,6 +11,7 @@ import SwiftUI
 struct SwiftfulCryptoApp: App {
     
     @StateObject private var vm = HomeViewModel()
+    @State private var showLauchView:Bool = true
     
     init(){
         //在应用启动时设置导航栏外观
@@ -20,11 +21,24 @@ struct SwiftfulCryptoApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                HomeView()
-                    .navigationBarHidden(true)
+            
+            ZStack{
+                NavigationView {
+                    HomeView()
+                        .navigationBarHidden(true)
+                }
+                .environmentObject(vm)
+                
+                ZStack{
+                    if showLauchView{
+                        LaunchView(showLaunchView: $showLauchView)
+                            .transition(.move(edge: .leading))
+                    }
+                }
+                .zIndex(2.0)
             }
-            .environmentObject(vm)
+            
+         
         }
     }
 }
