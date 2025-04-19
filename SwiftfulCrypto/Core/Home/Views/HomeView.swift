@@ -19,6 +19,8 @@ struct HomeView: View {
   //  @State private var showDetailView: Bool = false
     @State private var path = NavigationPath()
     
+    @State private var showSettingsView:Bool = false
+    
     var body: some View {
         
         NavigationStack(path: $path) {
@@ -55,6 +57,11 @@ struct HomeView: View {
                     
                     Spacer(minLength: 0)
                 }
+                .sheet(isPresented: $showSettingsView) {
+                    SettingsView()
+                }
+                
+                
             }
             .navigationDestination(for: CoinModel.self) { coin in
                 DetailLoadingView(coin: .constant(coin))
@@ -91,7 +98,8 @@ extension HomeView{
                 .onTapGesture {
                     if showPortfolio {
                         showPortfolioView.toggle()
-                        
+                    }else{
+                        showSettingsView.toggle()
                     }
                 }
                 .background(

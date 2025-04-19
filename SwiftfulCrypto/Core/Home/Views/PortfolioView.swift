@@ -28,9 +28,9 @@ struct PortfolioView: View {
             }
             .navigationTitle("编辑投资组合")
             .toolbar(content: {
-                ToolbarItem(placement: .navigationBarLeading) {
-                   XMarkButton()
-                }
+//                ToolbarItem(placement: .navigationBarLeading) {
+//                   XMarkButton()
+//                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     trailingNaviBarButtons
                 }
