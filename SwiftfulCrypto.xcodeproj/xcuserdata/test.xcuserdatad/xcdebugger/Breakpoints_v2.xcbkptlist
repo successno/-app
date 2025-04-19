@@ -15,8 +15,8 @@
             filePath = "SwiftfulCrypto/Core/Home/Views/PortfolioView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "saveButtonPressed()"
             landmarkType = "7">
             <Actions>
@@ -30,7 +30,7 @@
             </Actions>
             <Locations>
                <Location
-                  uuid = "79D82AB7-6ADC-44EA-8F1B-B0F7E4B0AE3F - 103f38a812ea7b55"
+                  uuid = "79D82AB7-6ADC-44EA-8F1B-B0F7E4B0AE3F - 103f38a812ea7ba9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -40,11 +40,11 @@
                   urlString = "file:///Users/test/Desktop/SwiftfulCrypto/SwiftfulCrypto/Core/Home/Views/PortfolioView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "152"
-                  endingLineNumber = "152">
+                  startingLineNumber = "156"
+                  endingLineNumber = "156">
                </Location>
                <Location
-                  uuid = "79D82AB7-6ADC-44EA-8F1B-B0F7E4B0AE3F - b2dc28cc0848fc22"
+                  uuid = "79D82AB7-6ADC-44EA-8F1B-B0F7E4B0AE3F - b2dc28cc0848fc9e"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -54,8 +54,8 @@
                   urlString = "file:///Users/test/Desktop/SwiftfulCrypto/SwiftfulCrypto/Core/Home/Views/PortfolioView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153">
+                  startingLineNumber = "157"
+                  endingLineNumber = "157">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -71,8 +71,8 @@
             filePath = "SwiftfulCrypto/Core/Home/Views/PortfolioView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "saveButtonPressed()"
             landmarkType = "7">
             <Actions>
@@ -86,7 +86,7 @@
             </Actions>
             <Locations>
                <Location
-                  uuid = "67E38325-79A2-4D2B-B489-AD4F1A7CEA0E - 103f38a812ea7aa1"
+                  uuid = "67E38325-79A2-4D2B-B489-AD4F1A7CEA0E - 103f38a812ea7925"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -96,11 +96,11 @@
                   urlString = "file:///Users/test/Desktop/SwiftfulCrypto/SwiftfulCrypto/Core/Home/Views/PortfolioView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164">
+                  startingLineNumber = "168"
+                  endingLineNumber = "168">
                </Location>
                <Location
-                  uuid = "67E38325-79A2-4D2B-B489-AD4F1A7CEA0E - 324bf64f66b77ac9"
+                  uuid = "67E38325-79A2-4D2B-B489-AD4F1A7CEA0E - 324bf64f66b7794d"
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -110,8 +110,8 @@
                   urlString = "file:///Users/test/Desktop/SwiftfulCrypto/SwiftfulCrypto/Core/Home/Views/PortfolioView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "165"
-                  endingLineNumber = "165">
+                  startingLineNumber = "169"
+                  endingLineNumber = "169">
                </Location>
             </Locations>
          </BreakpointContent>

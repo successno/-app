@@ -147,7 +147,7 @@ extension HomeView{
                             path.append(coin)
                         }
                     }
-                    .listRowBackground(Color.clear)
+                    .listRowBackground(Color.theme.background)
             }
         }
         .listStyle(PlainListStyle())
@@ -168,6 +168,8 @@ extension HomeView{
                             path.append(coin)
                         }
                     }
+                    .listRowBackground(Color.theme.background)
+
             }
             
         }

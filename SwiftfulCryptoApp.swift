@@ -17,6 +17,10 @@ struct SwiftfulCryptoApp: App {
         //在应用启动时设置导航栏外观
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor : UIColor(Color.theme.accent)]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(Color.theme.accent)]
+        UINavigationBar.appearance().tintColor = UIColor(Color.theme.accent)
+        
+        UITableView.appearance().backgroundColor = UIColor.clear
+        
     }
     
     var body: some Scene {
