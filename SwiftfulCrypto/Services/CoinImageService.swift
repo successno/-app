@@ -53,7 +53,9 @@ class CoinImageService {
                 .tryMap({ (data) -> UIImage? in
                     return UIImage(data: data)
                 })
-            
+                .receive(on: DispatchQueue.main)
+
+                
                 .mapError { error in
                     if error is NetworkingManager.CoinDataServiceError{
                         return NetworkingManager.CoinDataServiceError.decodingError

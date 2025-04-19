@@ -108,7 +108,7 @@ class CoinDataService {
             
                 NetworkingManager.download(url: url)
                 .decode(type: [CoinModel].self, decoder: JSONDecoder())
-     
+                .receive(on: DispatchQueue.main)
                 .mapError { error in
                     if error is NetworkingManager.CoinDataServiceError{
                         return NetworkingManager.CoinDataServiceError.decodingError

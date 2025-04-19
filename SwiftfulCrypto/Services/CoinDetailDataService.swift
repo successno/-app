@@ -66,7 +66,8 @@ class CoinDetailDataService {
 
         coinDetailcancellable = NetworkingManager.download(url: url)
             .decode(type: CoinDetailModel.self, decoder: JSONDecoder())
-        
+            .receive(on: DispatchQueue.main)
+
             .mapError { error in
                 if error is NetworkingManager.CoinDataServiceError{
                     return NetworkingManager.CoinDataServiceError.decodingError

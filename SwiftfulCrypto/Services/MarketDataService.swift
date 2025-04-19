@@ -41,7 +41,8 @@ class MarketDataService {
         
         NetworkingManager.download(url: url)
             .decode(type: GlobalData.self, decoder: JSONDecoder())
-        
+            .receive(on: DispatchQueue.main)
+
             .mapError { error in
                 if error is NetworkingManager.CoinDataServiceError{
                     return NetworkingManager.CoinDataServiceError.decodingError

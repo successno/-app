@@ -50,7 +50,14 @@ struct HomeView: View {
                             .transition(.move(edge: .leading))
                     }
                     if showPortfolio{
-                        portfolioCoinsList
+                        ZStack(alignment: .top){
+                            if vm.portfolioCoins.isEmpty && vm.searchText.isEmpty{
+                                portfolioEmptyText
+                            }else{
+                                portfolioCoinsList
+                            }
+                        }
+                        
                             .transition(.move(edge: .trailing))
                     }
                     
@@ -140,6 +147,7 @@ extension HomeView{
                             path.append(coin)
                         }
                     }
+                    .listRowBackground(Color.clear)
             }
         }
         .listStyle(PlainListStyle())
@@ -164,6 +172,15 @@ extension HomeView{
             
         }
         .listStyle(PlainListStyle())
+    }
+    
+    private var portfolioEmptyText:some View{
+        Text("你还没有在此添加投资组合...")
+            .font(.callout)
+            .foregroundColor(Color.theme.accent)
+            .fontWeight(.medium)
+            .multilineTextAlignment(.center)
+            .padding(50)
     }
     
 //    private func segue(coin:CoinModel){
